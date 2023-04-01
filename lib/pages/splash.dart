@@ -30,13 +30,6 @@ class _SplashPageState extends State<SplashPage> {
         ),
         Text("Help on the road, just a call away!"),
       ],
-    ))
-        // Image.asset(
-        //   'assets/splash.jpeg',
-        //   height: 400,
-        //   width: 400,
-        //   fit: BoxFit.fitWidth,
-        // ),
-        );
+    )));
   }
 }
