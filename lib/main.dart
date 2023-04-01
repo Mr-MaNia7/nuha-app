@@ -17,7 +17,6 @@ class NuhaApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       home: MySplashScreen(),
-      // home: SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -44,9 +43,9 @@ class _MyHomePageState extends State<HomePage> {
           height: 50,
         ),
       ),
-      // body: CommonWebView(
-      //     title: 'Flutter',
-      //     url: "https://app.nuharoadsideassistance.com:8999/"),
+      body: CommonWebView(
+          title: 'Flutter',
+          url: "https://app.nuharoadsideassistance.com:8999/"),
     );
   }
 }
