@@ -48,9 +48,7 @@ class _MyHomePageState extends State<HomePage> {
           height: 50,
         ),
       ),
-      body: CommonWebView(
-          title: 'Flutter',
-          url: "https://app.nuharoadsideassistance.com:8999/"),
+      body: CommonWebView(url: "https://app.nuharoadsideassistance.com:8999/"),
     );
   }
 }
