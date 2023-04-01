@@ -16,7 +16,12 @@ class NuhaApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: MySplashScreen(),
+      // home: MySplashScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => SplashPage(),
+        '/home': (context) => const HomePage(title: 'Nuha Roadside Assistance'),
+      },
       debugShowCheckedModeBanner: false,
     );
   }
