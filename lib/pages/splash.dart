@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:location_permissions/location_permissions.dart';
+// import 'package:permission_handler/permission_handler.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -11,8 +12,9 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 6), () {
+    Timer(const Duration(seconds: 4), () {
       Navigator.pushReplacementNamed(context, '/home');
+      // Future<bool> check = checkPermissions();
     });
   }
 
@@ -28,8 +30,25 @@ class _SplashPageState extends State<SplashPage> {
           width: 400,
           fit: BoxFit.fitWidth,
         ),
-        Text("Help on the road, just a call away!"),
+        const Text("Help on the road, just a call away!"),
       ],
     )));
   }
 }
+
+// Future<bool> checkPermissions() async {
+//   var status = await Permission.location.status;
+//   if (status.isDenied || status.isRestricted) {
+//     var requestStatus = await Permission.location.request();
+//     if (await Permission.location.request().isGranted) {
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   } else {
+//     return true;
+//   }
+//   if (await Permission.location.isPermanentlyDenied) {
+//     openAppSettings();
+//   }
+// }
