@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:helloworld/common_webview.dart';
 import 'package:helloworld/pages/splash.dart';
+import 'package:helloworld/permission/handle_permissions.dart';
 
 void main() {
   runApp(const NuhaApp());
@@ -12,14 +13,14 @@ class NuhaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Splash Screen',
+      title: 'Nuha App',
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      // home: MySplashScreen(),
-      initialRoute: '/',
+      initialRoute: '/splash',
       routes: {
-        '/': (context) => SplashPage(),
+        '/splash': (context) => SplashPage(),
+        '/permission': (context) => PermissionHandlerScreen(),
         '/home': (context) => const HomePage(title: 'Nuha Roadside Assistance'),
       },
       debugShowCheckedModeBanner: false,

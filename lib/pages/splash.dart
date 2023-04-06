@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -11,8 +10,8 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 6), () {
-      Navigator.pushReplacementNamed(context, '/home');
+    Timer(const Duration(seconds: 4), () {
+      Navigator.pushReplacementNamed(context, '/permission');
     });
   }
 
@@ -28,7 +27,7 @@ class _SplashPageState extends State<SplashPage> {
           width: 400,
           fit: BoxFit.fitWidth,
         ),
-        Text("Help on the road, just a call away!"),
+        const Text("Help on the road, just a call away!"),
       ],
     )));
   }
