@@ -1,117 +1,88 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class PermissionHandlerScreen extends StatefulWidget {
+class Permissions extends StatefulWidget {
   @override
-  _PermissionHandlerScreenState createState() =>
-      _PermissionHandlerScreenState();
+  _PermissionsState createState() => _PermissionsState();
 }
 
-class _PermissionHandlerScreenState extends State<PermissionHandlerScreen> {
-  @override
-  void initState() {
-    super.initState();
-    permissionServiceCall();
-  }
-
-  permissionServiceCall() async {
-    await permissionServices().then(
-      (value) {
-        if (value != null) {
-          if (value[Permission.location]!.isGranted &&
-              value[Permission.microphone]!.isGranted &&
-              value[Permission.notification]!.isGranted) {
-            Navigator.pushReplacementNamed(context, '/home');
-          }
-        }
-      },
-    );
-  }
-
-  /*Permission services*/
-  Future<Map<Permission, PermissionStatus>> permissionServices() async {
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.location,
-      Permission.microphone,
-      Permission.notification,
-    ].request();
-
-    if (statuses[Permission.location]!.isPermanentlyDenied) {
-      await openAppSettings().then(
-        (value) async {
-          if (value) {
-            if (await Permission.location.status.isPermanentlyDenied == true &&
-                await Permission.location.status.isGranted == false) {
-              openAppSettings();
-            }
-          }
-        },
-      );
-    } else {
-      if (statuses[Permission.location]!.isDenied) {
-        permissionServiceCall();
-      }
-      // if (await Permission.locationWhenInUse.serviceStatus.isDisabled){
-
-      // }
-    }
-    if (statuses[Permission.notification]!.isPermanentlyDenied) {
-      await openAppSettings().then(
-        (value) async {
-          if (value) {
-            if (await Permission.notification.status.isPermanentlyDenied ==
-                    true &&
-                await Permission.notification.status.isGranted == false) {
-              openAppSettings();
-            }
-          }
-        },
-      );
-    } else {
-      if (statuses[Permission.notification]!.isDenied) {
-        permissionServiceCall();
-      }
-    }
-
-    if (statuses[Permission.microphone]!.isPermanentlyDenied) {
-      await openAppSettings().then(
-        (value) async {
-          if (value) {
-            if (await Permission.microphone.status.isPermanentlyDenied ==
-                    true &&
-                await Permission.microphone.status.isGranted == false) {
-              openAppSettings();
-            }
-          }
-        },
-      );
-    } else {
-      if (statuses[Permission.microphone]!.isDenied) {
-        permissionServiceCall();
-      }
-    }
-    /*{Permission.phone: PermissionStatus.granted, Permission.location: PermissionStatus.granted}*/
-    return statuses;
-  }
-
+class _PermissionsState extends State<Permissions> {
   @override
   Widget build(BuildContext context) {
-    permissionServiceCall();
     return Scaffold(
-      body: Container(
-        child: Center(
-          child: InkWell(
-              onTap: () {
-                permissionServiceCall();
-              },
-              child: Text(
-                "Click here to manually enable necessary permissions for the app to work",
-                style: TextStyle(fontSize: 20, color: Colors.orange),
-                textAlign: TextAlign.center,
-              )),
+        appBar: AppBar(
+          title: Text("Request Permission"),
+          backgroundColor: Colors.redAccent,
         ),
-      ),
-    );
+        body: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(20),
+          child: Column(
+            children: [
+              Container(
+                child: ElevatedButton(
+                  child: Text("Request Single Permission"),
+                  onPressed: () async {
+                    print("Location Permission");
+                    if (await Permission.location.request().isGranted) {
+                      // Either the permission was already granted before or the user just granted it.
+                      Navigator.pushReplacementNamed(context, '/splash');
+                      print("Location Permission is granted");
+                    } else {
+                      print("Location Permission is denied.");
+                      Navigator.pushReplacementNamed(context, '/home');
+                    }
+                  },
+                ),
+              ),
+              // Container(
+              //   child: ElevatedButton(
+              //     child: Text("Request Multiple Permission"),
+              //     onPressed: () async {
+              //       // You can request multiple permissions at once.
+              //       Map<Permission, PermissionStatus> statuses = await [
+              //         Permission.location,
+              //         Permission.storage,
+              //       ].request();
+              //       print(statuses[Permission.location]);
+              //       print(statuses[Permission.storage]);
+
+              //       // if (statuses[Permission.location]) {
+              //       //   //check each permission status after.
+              //       //   print("Location permission is denied.");
+              //       // }
+
+              //       // if (statuses[Permission.camera].isDenied) {
+              //       //   //check each permission status after.
+              //       //   print("Camera permission is denied.");
+              //       // }
+              //     },
+              //   ),
+              // ),
+              // Container(
+              //   child: ElevatedButton(
+              //     child: Text("Check Camera Permission"),
+              //     onPressed: () async {
+              //       //check permission without request popup
+              //       var status = await Permission.camera.status;
+              //       if (status.isDenied) {
+              //         // We didn't ask for permission yet or the permission has been denied before but not permanently.
+              //         print("Permission is denined.");
+              //       } else if (status.isGranted) {
+              //         //permission is already granted.
+              //         print("Permission is already granted.");
+              //       } else if (status.isPermanentlyDenied) {
+              //         //permission is permanently denied.
+              //         print("Permission is permanently denied");
+              //       } else if (status.isRestricted) {
+              //         //permission is OS restricted.
+              //         print("Permission is OS restricted.");
+              //       }
+              //     },
+              //   ),
+              // )
+            ],
+          ),
+        ));
   }
 }
